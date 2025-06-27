@@ -1,0 +1,105 @@
+<style>
+  /* รูปแบบฟอนต์และตารางหลัก */
+  body {
+    font-family: 'TH Sarabun New', 'Sarabun', sans-serif;
+    font-size: 12pt;
+  }
+  
+  /* หัวตาราง */
+  .table-header {
+    font-family: 'TH Niramit AS', sans-serif;
+    font-size: 8pt;
+    font-weight: bold;
+    background-color: #f5f5f5;
+  }
+  
+  /* ตารางหลัก */
+  .table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 15px;
+    font-family: 'TH Sarabun New';
+    font-size: 8pt;
+  }
+  
+  .table th, .table td {
+    padding: 8px;
+    border: 1px solid #ddd;
+    vertical-align: top;
+  }
+  
+  /* รูปแบบตัวเลข */
+  .number-cell {
+    text-align: right;
+    font-family: 'TH Sarabun New', 'Arial';
+  }
+  
+  .center-cell {
+    text-align: center;
+  }
+  
+  /* ส่วน Serial/Batch */
+  .item-detail-row {
+    font-size: 10pt;
+    color: #555;
+  }
+  
+  /* ส่วนรวมทั้งหมด */
+  .total-row {
+    font-weight: bold;
+    /* background-color: #f9f9f9; */
+  }
+  
+  /* ซ่อนหัวตารางเมื่อพิมพ์หลายหน้า */
+  thead {display: table-header-group;}
+</style>
+
+{% set sum_qty = [0] %}
+{% set sum_amount = [0] %}
+
+<table class="table">
+    <caption style="font-family: 'TH Niramit AS'; font-size: 10pt; font-weight: bold; margin-bottom: 10px; opacity: 0.7;">
+    Purchase Receipt Item
+</caption>
+    <thead class="table-header repeat">
+    <tr>
+        <th width="25%">Item Code</th>
+        <th width="40%">Description</th>
+        <th width="10%">Warehouse</th>
+        <th width="5%">Qty</th>
+        <th width="15%">Amount</th>
+    </tr>
+    </thead>
+    <tbody>
+    {% for item in doc.items | sort(attribute='item_code') %}
+    <tr>
+        <td>{{ item.item_code }}</td>
+        <td>{{ item.description }}</td>
+        <td>{{ item.warehouse }}</td>
+        <td class="center-cell">{{ item.qty }}</td>
+        <td class="number-cell">{{ frappe.utils.fmt_money(item.amount) }}</td>
+    </tr>
+    {% if item.serial_no or item.batch_no %}
+    <tr class="item-detail-row">
+        <td></td>
+        <td colspan="4">
+            {% if item.serial_no %}
+            <div><strong>S/N:</strong> {{ item.serial_no }}</div>
+            {% endif %}
+            {% if item.batch_no %}
+            <div><strong>Batch:</strong> {{ item.batch_no }}</div>
+            {% endif %}
+        </td>
+    </tr>
+    {% endif %}
+    {% if sum_qty.append(sum_qty[-1] + item.qty) %}{% endif %}
+    {% if sum_amount.append(sum_amount[-1] + item.amount) %}{% endif %}
+    {% endfor %}
+    
+    <tr class="total-row">
+        <td colspan="3" style="text-align: right;">Total</td>
+        <td class="center-cell">{{ sum_qty[-1] }}</td>
+        <td class="number-cell">{{ frappe.utils.fmt_money(sum_amount[-1]) }}</td>
+    </tr>
+    </tbody>
+</table>

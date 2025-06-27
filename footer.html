@@ -1,0 +1,59 @@
+<div class="footer-section" style="padding-top: 20px; font-family: 'TH Sarabun New', sans-serif; font-size: 12pt;">
+ 
+    <!-- เส้นคั่น -->
+  <div style="border-top: 1px solid #000; margin: 10px 0;"></div>
+  
+  <div class="row" style="display: flex; justify-content: space-between;">
+    <!-- ส่วนซ้าย (ลายเซ็น) -->
+    <div class="col-xs-6" style="text-align: left; padding-left: 15px;">
+      <div style="margin-bottom: 40px;">
+        <div style="border-top: 1px solid #000; width: 200px; margin-top: 60px;"></div>
+        <div style="text-align: center; margin-top: 5px;">
+          <b>ผู้รับสินค้า</b>
+        </div>
+      </div>
+      <div>
+        <b>วันที่ _____/_____/_____</b>
+      </div>
+    </div>
+    
+   <!-- ส่วนขวา (สรุปรายการ) -->
+<div class="col-xs-6" style="text-align: right; padding-right: 15px; margin-top: 20px;">  <!-- เพิ่ม margin-top -->
+  <table style="width: 100%; border-collapse: collapse; margin-top: 10px;">  <!-- เพิ่ม margin-top -->
+    <tr>
+      <td style="text-align: left; font-size: 10pt; padding: 3px 0;"><b>Net Goods/Services:</b></td>
+      <td style="text-align: right; font-size: 10pt; padding: 3px 0;">{{frappe.utils.fmt_money(doc.base_total)}}</td>
+    </tr>
+    <tr>
+      <td style="text-align: left; font-size: 10pt; padding: 3px 0;"><b>Discount:</b></td>
+      <td style="text-align: right; font-size: 10pt; padding: 3px 0;">{{frappe.utils.fmt_money(doc.discount_amount)}}</td>
+    </tr>
+    <tr>
+      <td style="text-align: left; font-size: 10pt; padding: 3px 0;"><b>Total:</b></td>
+      <td style="text-align: right; font-size: 10pt; padding: 3px 0;">{{frappe.utils.fmt_money(doc.base_net_total)}}</td>
+    </tr>
+    <tr>
+      <td style="text-align: left; font-size: 10pt; padding: 3px 0;"><b>Taxes:</b></td>
+      <td style="text-align: right; font-size: 10pt; padding: 3px 0;">{{frappe.utils.fmt_money(doc.total_taxes_and_charges)}}</td>
+    </tr>
+    <tr style="border-top: 1px solid #000;">
+      <td style="text-align: left; font-size: 10pt; padding: 6px 0;"><b>Total Amount:</b></td>
+      <td style="text-align: right; font-size: 10pt; padding: 6px 0;"><b>{{frappe.utils.fmt_money(doc.grand_total)}}</b></td>
+    </tr>
+  </table>
+</div>
+  </div>
+</div>
+
+<style>
+  /* กำหนดฟอนต์หลัก */
+  .footer-section {
+    font-family: 'TH Sarabun New', 'Sarabun', sans-serif;
+    font-size: 12pt;
+  }
+  
+  /* ปรับรูปแบบตัวเลข */
+  .footer-section table {
+    font-family: 'TH Sarabun New', sans-serif;
+  }
+</style>
