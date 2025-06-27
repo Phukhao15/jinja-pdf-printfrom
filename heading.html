@@ -1,0 +1,164 @@
+{% set xhead="Receiving Slip" %}
+{% set xsubhead=doc.name %}
+{% set wtax_id = frappe.db.get_value('Supplier', doc.supplier,'tax_id') %}
+{% if wtax_id %}
+    {% set xtax_id = 'Tax ID: ' + wtax_id %}
+{% else %}    
+    {% set xtax_id = 'Tax ID: n/a' %}
+{% endif %}
+
+<style>
+  /* กำหนดสไตล์หลัก */
+  body {
+    font-family: 'TH Sarabun New', 'Sarabun', sans-serif;
+    font-size: 12pt;
+    color: #333;
+    line-height: 1.5;
+  }
+  
+  /* หัวเอกสาร */
+  .print-heading {
+    text-align: right;
+    margin-bottom: 20px;
+    border-bottom: 1px solid #e0e0e0;
+    padding-bottom: 10px;
+  }
+  
+  /* หัวข้อเอกสาร */
+  .print-heading h2 {
+    font-family: 'TH Niramit AS', sans-serif;
+    text-transform: capitalize;
+    font-size: 16pt;
+    color: #666;
+    margin: 0;
+  }
+  
+  /* เลข RC และวันที่ */
+  .sub-heading {
+    font-family: 'TH Niramit AS', sans-serif;
+    font-size: 12pt;
+    color: #666;
+    font-weight: normal;
+  }
+  
+  /* สถานะ Draft */
+  .document-status-draft {
+    background-color: #fff4e6;
+    padding: 5px;
+    margin: 10px 0;
+    border: 1px dashed #ffa726;
+  }
+  
+  .document-status-draft h4 {
+    color: #d84315;
+    font-style: italic;
+    margin: 5px 0;
+  }
+  
+  /* ตารางข้อมูล */
+  .margin-bottom {
+    margin-bottom: 15px;
+  }
+  
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 15px;
+    table-layout: fixed;
+  }
+  
+  table caption {
+    text-align: left;
+    font-weight: bold;
+    font-size: 12pt;
+    color: #666;
+    margin-bottom: 5px;
+  }
+  
+  table td {
+    padding: 8px 5px;
+    vertical-align: top;
+  }
+  
+  .label-column {
+    font-weight: bold;
+    font-size: 10pt;
+    width: 40%;
+    padding-right: 40px;
+  }
+  
+  .value-column {
+    font-size: 10pt;
+    width: 30%;
+  }
+  
+  strong {
+    color: #333;
+    font-weight: bold;
+  }
+</style>
+
+<div class="print-heading">                
+    <h2>
+      <div>{{ xhead }}</div>
+      <div><small class="sub-heading">{{xsubhead}}{{", "}}{{ doc.posting_date }}</small></div>
+    </h2>
+</div>
+
+{%- if doc.docstatus == 0 -%}
+<div class="text-center document-status-draft">
+    <h4> == DRAFT DOCUMENT == </h4>
+</div>
+{%- endif -%}
+
+<div class="row margin-bottom">
+  <!-- คอลัมน์ซ้าย -->
+  <div class="col-xs-6">
+    <table>
+      <caption>Purchased From:</caption>
+      <tr>
+        <td class="value-column">{{ doc.supplier }}</td>
+      </tr>
+      <tr>
+        <td class="value-column">{{ doc.supplier_name }}</td>
+      </tr>    
+      <tr>
+        <td class="value-column">{{ doc.address_display }}</td>
+      </tr>
+      <tr>
+        <td class="value-column">{{ xtax_id }}</td>
+      </tr>
+    </table>
+  </div>
+  
+  <!-- คอลัมน์ขวา -->
+  <div class="col-xs-6">
+    <table>
+      <caption style="font-weight: bold; font-size: 10pt;">Ship to:</caption>
+      <tr>
+        <td class="label-column">Posting Date:</td> 
+        <td class="value-column">{{ doc.posting_date }}</td>
+      </tr>
+      <tr>
+        <td class="label-column">Currency Code:</td> 
+        <td class="value-column">{{ doc.currency }}</td>
+      </tr>          
+      {% if doc.currency != 'THB' %}
+      <tr>
+        <td class="label-column">Exchange Rate:</td> 
+        <td class="value-column">{{ doc.conversion_rate }}</td>
+      </tr>      
+      {%- endif -%}
+      <tr>
+        <td class="label-column">NAV Reference:</td> 
+        <td class="value-column">{{ doc.nav_ref }}</td>
+      </tr>
+      {% if doc.sales_order != '' %}
+      <tr>
+        <td class="label-column">Sales Order:</td> 
+        <td class="value-column">{{ doc.sales_order }}</td>
+      </tr>          
+      {%- endif -%}
+    </table>
+  </div>
+</div>
