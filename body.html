@@ -1,13 +1,13 @@
 <style>
   /* รูปแบบฟอนต์และตารางหลัก */
   body {
-    font-family: 'TH Sarabun New', 'Sarabun', sans-serif;
+    font-family: 'TH Sarabun', 'TH Sarabun New', sans-serif;
     font-size: 12pt;
   }
   
   /* หัวตาราง */
   .table-header {
-    font-family: 'TH Niramit AS', sans-serif;
+    font-family: 'TH Sarabun', sans-serif;
     font-size: 8pt;
     font-weight: bold;
     background-color: #f5f5f5;
@@ -18,7 +18,7 @@
     width: 100%;
     border-collapse: collapse;
     margin-bottom: 15px;
-    font-family: 'TH Sarabun New';
+    font-family: 'TH Sarabun', sans-serif;
     font-size: 8pt;
   }
   
@@ -31,7 +31,7 @@
   /* รูปแบบตัวเลข */
   .number-cell {
     text-align: right;
-    font-family: 'TH Sarabun New', 'Arial';
+    font-family: 'TH Sarabun', sans-serif;
   }
   
   .center-cell {
@@ -40,14 +40,14 @@
   
   /* ส่วน Serial/Batch */
   .item-detail-row {
-    font-size: 10pt;
+    font-size: 8pt;
     color: #555;
+    font-family: 'TH Sarabun', sans-serif;
   }
   
   /* ส่วนรวมทั้งหมด */
   .total-row {
     font-weight: bold;
-    /* background-color: #f9f9f9; */
   }
   
   /* ซ่อนหัวตารางเมื่อพิมพ์หลายหน้า */
@@ -58,9 +58,9 @@
 {% set sum_amount = [0] %}
 
 <table class="table">
-    <caption style="font-family: 'TH Niramit AS'; font-size: 10pt; font-weight: bold; margin-bottom: 10px; opacity: 0.7;">
-    Purchase Receipt Item
-</caption>
+    <caption style="font-family: 'TH Sarabun'; font-size: 10pt; font-weight: bold; margin-bottom: 10px; opacity: 0.7;">
+        Purchase Receipt Item
+    </caption>
     <thead class="table-header repeat">
     <tr>
         <th width="25%">Item Code</th>
@@ -73,16 +73,16 @@
     <tbody>
     {% for item in doc.items | sort(attribute='item_code') %}
     <tr>
-        <td>{{ item.item_code }}</td>
-        <td>{{ item.description }}</td>
-        <td>{{ item.warehouse }}</td>
-        <td class="center-cell">{{ item.qty }}</td>
-        <td class="number-cell">{{ frappe.utils.fmt_money(item.amount) }}</td>
+        <td style="font-family: 'TH Sarabun', sans-serif;">{{ item.item_code }}</td>
+        <td style="font-family: 'TH Sarabun', sans-serif;">{{ item.description }}</td>
+        <td style="font-family: 'TH Sarabun', sans-serif;">{{ item.warehouse }}</td>
+        <td class="center-cell" style="font-family: 'TH Sarabun', sans-serif;">{{ item.qty }}</td>
+        <td class="number-cell" style="font-family: 'TH Sarabun', sans-serif;">{{ frappe.utils.fmt_money(item.amount) }}</td>
     </tr>
     {% if item.serial_no or item.batch_no %}
     <tr class="item-detail-row">
         <td></td>
-        <td colspan="4">
+        <td colspan="4" style="font-family: 'TH Sarabun', sans-serif;">
             {% if item.serial_no %}
             <div><strong>S/N:</strong> {{ item.serial_no }}</div>
             {% endif %}
@@ -97,9 +97,9 @@
     {% endfor %}
     
     <tr class="total-row">
-        <td colspan="3" style="text-align: right;">Total</td>
-        <td class="center-cell">{{ sum_qty[-1] }}</td>
-        <td class="number-cell">{{ frappe.utils.fmt_money(sum_amount[-1]) }}</td>
+        <td colspan="3" style="text-align: right; font-family: 'TH Sarabun', sans-serif;">Total</td>
+        <td class="center-cell" style="font-family: 'TH Sarabun', sans-serif;">{{ sum_qty[-1] }}</td>
+        <td class="number-cell" style="font-family: 'TH Sarabun', sans-serif;">{{ frappe.utils.fmt_money(sum_amount[-1]) }}</td>
     </tr>
     </tbody>
 </table>
