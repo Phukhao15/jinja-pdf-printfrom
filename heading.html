@@ -20,13 +20,13 @@
   .label-column,
   .value-column,
   strong {
-    font-family: 'TH Sarabun', 'TH Sarabun New', 'Sarabun', sans-serif;
+    font-family: 'TH Sarabun',  sans-serif;
   }
 
   /* กำหนดสไตล์หลัก */
   body {
     font-size: 12pt;
-    color: #333;
+    /* color: #333; */
     line-height: 1.5;
   }
   
@@ -42,15 +42,16 @@
   .print-heading h2 {
     text-transform: capitalize; /* UPPPERCASE*/
     font-size: 16pt;
-    color: #666;
+    font-weight: bold;
+    color: #c9c5c5;
     margin: 0;
-    /* font-weight: bold; เพิ่มตัวหนา */
+    
   }
   
   /* เลข RC และวันที่ */
   .sub-heading {
     font-size: 12pt;
-    color: #666;
+    color: #c9c5c5;
     font-weight: normal;
   }
   
@@ -62,7 +63,6 @@
   
   .document-status-draft h4 {
     margin: 5px 0;
-    color: #d84315;
     font-weight: bold;
   }
   
@@ -82,7 +82,7 @@
     text-align: left;
     font-weight: bold;
     font-size: 12pt;
-    color: #666;
+    color: #c9c5c5;
     margin-bottom: 5px;
   }
   
@@ -119,7 +119,7 @@
 
 {%- if doc.docstatus == 0 -%}
 <div class="text-center document-status-draft">
-    <h4> == DRAFT DOCUMENT == </h4>
+    <h4> == DRAFT == </h4>
 </div>
 {%- endif -%}
 
@@ -146,7 +146,7 @@
   <!-- คอลัมน์ขวา -->
   <div class="col-xs-6">
     <table>
-      <caption style="font-weight: bold;">Ship to:</caption>
+      <caption style="font-weight: bold;  color:#c9c5c5 ;">Ship to:</caption>
       <tr>
         <td class="label-column">Posting Date:</td> 
         <td class="value-column">{{ doc.posting_date }}</td>
