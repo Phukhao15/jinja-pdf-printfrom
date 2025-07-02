@@ -1,20 +1,20 @@
-.print-heading {
-  text-align: right;
-  padding-bottom: 20px;
-  margin-bottom: 20px;
-  border-bottom: 1px solid #d1d8dd;
-  font-family: 'TH Sarabun';
-}
+  .print-heading {
+    text-align: right;
+    padding-bottom: 20px;
+    margin-bottom: 20px;
+    border-bottom: 1px solid #d1d8dd;
+    /* font-family: 'TH Sarabun'; */
+  }
 
-.print-heading h2 {
-  margin: 0;
-  line-height: 1.4;
-}
+  .print-heading h2 {
+    margin: 0;
+    line-height: 1.4;
+  }
 
-.print-format th {
-  background-color: #eee !important;
-  border-bottom: none !important;
-  font-family: 'TH Sarabun';
-  font-size: 10pt;
-  padding: 8px 12px;
-}
+  .print-format th {
+    background-color: #eee !important;
+    border-bottom: none !important;
+    /* font-family: 'TH Sarabun'; */
+    font-size: 10pt;
+    padding: 8px 12px;
+  }
