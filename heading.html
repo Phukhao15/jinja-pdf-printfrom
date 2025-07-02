@@ -8,11 +8,24 @@
 {% endif %}
 
 <style>
+  body,
+  .print-heading,
+  .print-heading h2,
+  .sub-heading,
+  .document-status-draft,
+  .document-status-draft h4,
+  table,
+  table caption,
+  .label-column,
+  .value-column,
+  strong {
+    font-family: 'TH Sarabun New';
+  }
+
   /* กำหนดสไตล์หลัก */
   body {
-    font-family: 'TH Sarabun New', 'Sarabun', sans-serif;
     font-size: 12pt;
-    color: #333;
+    /* color: #333; */
     line-height: 1.5;
   }
   
@@ -26,32 +39,30 @@
   
   /* หัวข้อเอกสาร */
   .print-heading h2 {
-    font-family: 'TH Niramit AS', sans-serif;
-    text-transform: capitalize;
+    text-transform: capitalize; /* UPPPERCASE*/
     font-size: 16pt;
-    color: #666;
+    font-weight: bold;
+    color: #c9c5c5;
     margin: 0;
+    
   }
   
   /* เลข RC และวันที่ */
   .sub-heading {
-    font-family: 'TH Niramit AS', sans-serif;
     font-size: 12pt;
-    color: #666;
+    color: #c9c5c5;
     font-weight: normal;
   }
   
-  
   /* สถานะ Draft */
   .document-status-draft {
-    /* background-color: #fff4e6; */
     padding: 5px;
     margin: 10px 0;
-    /* border: 1px dashed #ffa726; */
   }
   
   .document-status-draft h4 {
     margin: 5px 0;
+    font-weight: bold;
   }
   
   /* ตารางข้อมูล */
@@ -70,13 +81,14 @@
     text-align: left;
     font-weight: bold;
     font-size: 12pt;
-    color: #666;
+    color: #c9c5c5;
     margin-bottom: 5px;
   }
   
   table td {
     padding: 8px 5px;
     vertical-align: top;
+    /* border-bottom: 1px solid #eee; เพิ่มเส้นแบ่งแถว */
   }
   
   .label-column {
@@ -88,7 +100,7 @@
   
   .value-column {
     font-size: 10pt;
-    width: 30%;
+    width: 60%; /* ปรับจาก 30% เป็น 60% */
   }
   
   strong {
@@ -106,7 +118,7 @@
 
 {%- if doc.docstatus == 0 -%}
 <div class="text-center document-status-draft">
-    <h4> == DRAFT DOCUMENT == </h4>
+    <h4> == DRAFT == </h4>
 </div>
 {%- endif -%}
 
@@ -133,7 +145,7 @@
   <!-- คอลัมน์ขวา -->
   <div class="col-xs-6">
     <table>
-      <caption style="font-weight: bold; font-size: 10pt;">Ship to:</caption>
+      <caption style="font-weight: bold;  color:#c9c5c5 ;">Ship to:</caption>
       <tr>
         <td class="label-column">Posting Date:</td> 
         <td class="value-column">{{ doc.posting_date }}</td>
