@@ -6,7 +6,7 @@
     width: 100%;
     border-collapse: collapse;
     margin-bottom: 15px;
-     font-family: 'Sarabun' !important;
+    font-family: 'Sarabun' !important;
     font-size: 8pt;
   }
   
@@ -14,11 +14,26 @@
     padding: 8px;
     border: 1px solid #ddd;
     vertical-align: top;
+    word-wrap: break-word;
+    word-break: break-word;
   }
   
   /* สำหรับแถว S/N และ BATCH */
   .serial-row td {
-    font-size: 8pt;
+    font-size: 7pt;
+    padding: 4px 8px;
+    word-wrap: break-word;
+    word-break: break-word;
+  }
+  
+  /* จัดการ serial number ให้แสดงผลเป็น 3 แถว */
+  .serial-content {
+    font-size: 7pt;
+    line-height: 1.4;
+  }
+  
+  .serial-row-display {
+    margin-bottom: 2px;
   }
   
   /* ช่องว่างระหว่างรายการ */
@@ -26,20 +41,42 @@
     padding: 2px;
     border: none;
   }
+  
+  /* ป้องกันการแตกของตาราง */
+  .table {
+    table-layout: fixed;
+  }
+  
+  /* กำหนดความกว้างของ column ให้ชัดเจน */
+  .table th:nth-child(1), .table td:nth-child(1) { width: 25%; }
+  .table th:nth-child(2), .table td:nth-child(2) { width: 35%; }
+  .table th:nth-child(3), .table td:nth-child(3) { width: 15%; }
+  .table th:nth-child(4), .table td:nth-child(4) { width: 10%; }
+  .table th:nth-child(5), .table td:nth-child(5) { width: 15%; }
+  
+  /* จัดการ page break */
+  .item-group {
+    page-break-inside: avoid;
+  }
+  
+  /* สำหรับการแบ่งหน้า */
+  .serial-page-break {
+    page-break-before: always;
+  }
 </style>
 
 {% set sum_qty = [0] %}
 {% set sum_amount = [0] %}
 
 <table class="table table-bordered table-condensed">
-    <caption><strong style="font-weight: bold;  color:#c9c5c5;  font-size: 10pt;">Purchase Receipt Item</strong></caption>
+    <caption><strong style="font-weight: bold; color:#c9c5c5; font-size: 10pt;">Purchase Receipt Item</strong></caption>
     <thead class="repeat table_header">
     <tr>
-        <th width="30%">Item Code</th>
-        <th width="40%">Description</th>
-        <th width="10%">Warehouse</th>
-        <th width="5%">Qty</th>
-        <th width="15%">Amount</th>
+        <th>Item Code</th>
+        <th>Description</th>
+        <th>Warehouse</th>
+        <th>Qty</th>
+        <th>Amount</th>
     </tr>
     </thead>
     <tbody>
@@ -53,26 +90,52 @@
     </tr>
     
     {% if item.serial_no %}
-    <tr class="serial-row">
-        <td style="text-align:right">S/N</td>
-        <td colspan="4">{{ item.serial_no }}</td>
-    </tr>
+    {% set serial_list = item.serial_no.split('\n') if '\n' in item.serial_no else item.serial_no.split(',') %}
+    {% set serial_count = serial_list | length %}
+    
+    {% for chunk_start in range(0, serial_count, 40) %}
+        {% set chunk_end = chunk_start + 40 %}
+        {% set chunk_serials = serial_list[chunk_start:chunk_end] %}
+        
+        <tr class="serial-row{% if chunk_start > 0 %} serial-page-break{% endif %}">
+            <td style="text-align:right; font-weight: bold;">S/N</td>
+            <td colspan="4">
+                <div class="serial-content">
+                    {% for row_start in range(0, chunk_serials | length, 13) %}
+                        {% set row_end = row_start + 13 %}
+                        {% set row_serials = chunk_serials[row_start:row_end] %}
+                        {% if row_serials %}
+                            <div class="serial-row-display">
+                                {% for serial in row_serials %}
+                                    {% if serial.strip() %}
+                                        {{ serial.strip() }}{% if not loop.last %}, {% endif %}
+                                    {% endif %}
+                                {% endfor %}
+                            </div>
+                        {% endif %}
+                    {% endfor %}
+                </div>
+            </td>
+        </tr>
+    {% endfor %}
     {% endif %}
     
     {% if item.batch_no %}
     <tr class="serial-row">
-        <td style="text-align:right">BATCH</td>
-        <td colspan="4">{{ item.batch_no }}</td>
+        <td style="text-align:right; font-weight: bold;">BATCH</td>
+        <td colspan="4">
+            <div class="serial-content">
+                {{ item.batch_no }}
+            </div>
+        </td>
     </tr>
     {% endif %}
-    
-    <!-- <tr class="spacer-row"><td colspan="5"></td></tr> -->
     
     {% if sum_qty.append(sum_qty[-1] + item.qty) %}{% endif %}
     {% if sum_amount.append(sum_amount[-1] + item.amount) %}{% endif %}
     {% endfor %}
     
-    <tr>
+    <tr style="border-top: 2px solid #000;">
         <td colspan="3" style="text-align:right"><strong>Total</strong></td>
         <td style="text-align:center"><strong>{{ sum_qty[-1] }}</strong></td>
         <td style="text-align:right"><strong>{{ frappe.utils.fmt_money(sum_amount[-1]) }}</strong></td>

@@ -1,11 +1,11 @@
-<div class="footer-section" style="padding-top: 20px;  font-family: 'Sarabun' !important; font-size: 12pt;">
+<div class="footer-section" style="padding-top: 20px; font-family: 'Sarabun' !important; font-size: 12pt;">
  
     <!-- เส้นคั่น -->
   <div style="border-top: 1px solid #000; margin: 10px 0;"></div>
   
   <div class="row" style="display: flex; justify-content: space-between;">
     <!-- ส่วนซ้าย (ลายเซ็น) -->
-    <div class="col-xs-6" style="text-align: left; padding-left: 15px;  font-family: 'Sarabun' !important;">
+    <div class="col-xs-6" style="text-align: left; padding-left: 15px; font-family: 'Sarabun' !important;">
       <div style="margin-bottom: 40px;">
         <div style="border-top: 1px solid #000; width: 200px; margin-top: 60px;"></div>
         <div style="text-align: center; margin-top: 5px;">
@@ -18,11 +18,11 @@
     </div>
     
    <!-- ส่วนขวา (สรุปรายการ) -->
-<div class="col-xs-6" style="text-align: right; padding-right: 15px; margin-top: 20px;  font-family: 'Sarabun' !important;">
-  <table style="width: 100%; border-collapse: collapse; margin-top: 10px;  font-family: 'Sarabun' !important;">
+<div class="col-xs-6" style="text-align: right; padding-right: 15px; margin-top: 20px; font-family: 'Sarabun' !important;">
+  <table style="width: 100%; border-collapse: collapse; margin-top: 10px; font-family: 'Sarabun' !important; table-layout: fixed;">
     <tr>
-      <td style="text-align: left; font-size: 10pt; padding: 3px 0;  font-family: 'Sarabun' !important;"><b>Net Goods/Services:</b></td>
-      <td style="text-align: right; font-size: 10pt; padding: 3px 0;  font-family: 'Sarabun' !important;">{{frappe.utils.fmt_money(doc.base_total)}}</td>
+      <td style="text-align: left; font-size: 10pt; padding: 3px 0; font-family: 'Sarabun' !important; width: 60%;"><b>Net Goods/Services:</b></td>
+      <td style="text-align: right; font-size: 10pt; padding: 3px 0; font-family: 'Sarabun' !important; width: 40%;">{{frappe.utils.fmt_money(doc.base_total)}}</td>
     </tr>
     <tr>
       <td style="text-align: left; font-size: 10pt; padding: 3px 0; font-family: 'Sarabun' !important;"><b>Discount:</b></td>
@@ -30,11 +30,11 @@
     </tr>
     <tr>
       <td style="text-align: left; font-size: 10pt; padding: 3px 0; font-family: 'Sarabun' !important;"><b>Total:</b></td>
-      <td style="text-align: right; font-size: 10pt; padding: 3px 0; font-family: 'Sarabun';">{{frappe.utils.fmt_money(doc.base_net_total)}}</td>
+      <td style="text-align: right; font-size: 10pt; padding: 3px 0; font-family: 'Sarabun' !important;">{{frappe.utils.fmt_money(doc.base_net_total)}}</td>
     </tr>
     <tr>
       <td style="text-align: left; font-size: 10pt; padding: 3px 0; font-family: 'Sarabun' !important;"><b>Taxes:</b></td>
-      <td style="text-align: right; font-size: 10pt; padding: 3px 0; font-family: 'Sarabun';">{{frappe.utils.fmt_money(doc.total_taxes_and_charges)}}</td>
+      <td style="text-align: right; font-size: 10pt; padding: 3px 0; font-family: 'Sarabun' !important;">{{frappe.utils.fmt_money(doc.total_taxes_and_charges)}}</td>
     </tr>
     <tr style="border-top: 1px solid #000;">
       <td style="text-align: left; font-size: 10pt; padding: 6px 0; font-family: 'Sarabun' !important;"><b>Total Amount:</b></td>
@@ -50,10 +50,16 @@
   .footer-section {
     font-family: 'Sarabun' !important;
     font-size: 12pt;
+    page-break-inside: avoid;
   }
   
   /* ปรับรูปแบบตัวเลข */
   .footer-section table {
     font-family: 'Sarabun' !important;
+  }
+  
+  /* ป้องกันการแตกของหน้า */
+  .row {
+    page-break-inside: avoid;
   }
 </style>

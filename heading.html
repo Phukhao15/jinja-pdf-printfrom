@@ -26,7 +26,6 @@
   /* กำหนดสไตล์หลัก */
   body {
     font-size: 12pt;
-    /* color: #333; */
     line-height: 1.5;
   }
   
@@ -40,12 +39,11 @@
   
   /* หัวข้อเอกสาร */
   .print-heading h2 {
-    text-transform: capitalize; /* UPPPERCASE*/
+    text-transform: capitalize;
     font-size: 16pt;
     font-weight: bold;
     color: #c9c5c5;
     margin: 0;
-    
   }
   
   /* เลข RC และวันที่ */
@@ -89,7 +87,7 @@
   table td {
     padding: 8px 5px;
     vertical-align: top;
-    /* border-bottom: 1px solid #eee; เพิ่มเส้นแบ่งแถว */
+    word-wrap: break-word;
   }
   
   .label-column {
@@ -101,12 +99,19 @@
   
   .value-column {
     font-size: 10pt;
-    width: 60%; /* ปรับจาก 30% เป็น 60% */
+    width: 60%;
+    word-wrap: break-word;
+    word-break: break-word;
   }
   
   strong {
     color: #333;
     font-weight: bold;
+  }
+  
+  /* ป้องกันการแตกของหน้า */
+  .row {
+    page-break-inside: avoid;
   }
 </style>
 
@@ -146,7 +151,7 @@
   <!-- คอลัมน์ขวา -->
   <div class="col-xs-6">
     <table>
-      <caption style="font-weight: bold;  color:#c9c5c5 ;">Ship to:</caption>
+      <caption style="font-weight: bold; color:#c9c5c5;">Ship to:</caption>
       <tr>
         <td class="label-column">Posting Date:</td> 
         <td class="value-column">{{ doc.posting_date }}</td>
